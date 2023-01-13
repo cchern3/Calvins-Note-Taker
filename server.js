@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const { notes }= require('./db/db.json')
 const api = require('./routes/index.js');
+const { v4: uuidv4 } = require('uuid');
 
 const PORT = process.env.PORT || 3001;
 
@@ -22,8 +23,28 @@ app.get('/', (req, res) => {
 
 app.get('/api/notes', (req, res) => res.json(notes));
 
+app.post('/', (req, res)=> {
+    req.body.id = uuidv4();
+    const newNote = req.body;
+    notes.push(newNote);
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify({ notes }, null, 2)
+    );
+    res.json(notes);
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    const noteIndex = notes.findIndex(n => n.id == id);
+    notes.splice(noteIndex, 1);
+    fs.writeFileSync(
+        path.join(__dirname, './db/db.json'),
+        JSON.stringify({ notes }, null, 2)
+    );
+    res.json(notes);
+});
+
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`);
   });
-
-app.post()
