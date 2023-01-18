@@ -6,4 +6,6 @@
   * [Deployed](#deployed)
   * [Questions](#questions)
   * [Credits](#credits)
+  ## Description
+  This challenge is to create an application that can be used to write, save, and delete notes in order to keep track of specific tasks, utilizing Express.js. 
 
