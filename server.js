@@ -81,6 +81,10 @@ app.delete("/api/notes/:id", function (req, res) {
         });
     });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+    });
+
 // initiates server to start listening
 app.listen(PORT, () => {
     console.log(`App listening on PORT http://localhost:${PORT}`);
